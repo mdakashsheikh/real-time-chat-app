@@ -1,32 +1,28 @@
-import React, { useState } from 'react'
-import GenderCheckbox from './GenderCheckbox'
-import { Link } from 'react-router-dom'
-import useSignup from '../../hooks/useSignup'
+import { Link } from "react-router-dom";
+import GenderCheckbox from "./GenderCheckbox";
+import { useState } from "react";
+import useSignup from "../../hooks/useSignup";
 
 const SignUp = () => {
-    const { loading, signup } = useSignup();
-    const [inputs, setInputs] = useState({
-        fullname: '',
-        username: '',
-        password: '',
-        confirmPassword: '',
-        gender: '',
-    })
+	const [inputs, setInputs] = useState({
+		fullName: "",
+		username: "",
+		password: "",
+		confirmPassword: "",
+		gender: "",
+	});
 
-    const handleCheckboxChange = (gender) => {
-        setInputs({ ...inputs, gender})
-    }
+	const { loading, signup } = useSignup();
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setInputs(prev => ({...prev, [name]: value}));
-    }
+	const handleCheckboxChange = (gender) => {
+		setInputs({ ...inputs, gender });
+	};
 
-    const handleSubmit = async(event) => {
-        event.preventDefault();
-        
-        await signup(inputs);
-    }
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		await signup(inputs);
+	};
+
 
 
     return (
@@ -96,7 +92,12 @@ const SignUp = () => {
                         Already have an account?
                     </Link>
                     <div>
-                        <button className='btn btn-block btn-sm mt-2'>Login</button>
+                        <button 
+                            className='btn btn-block btn-sm mt-2'
+                            disabled={loading}
+                        >
+                            {loading ? <span className='loading loading-spinner'></span> : 'Sign Up'}
+                        </button>
                     </div>
                 </form>
             </div>
